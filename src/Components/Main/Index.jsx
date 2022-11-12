@@ -5,25 +5,19 @@ import { BarChart, CartesianGrid, XAxis, YAxis, Legend, Tooltip, Bar } from 'rec
 export default function Index() {
 
     const [data, setData] = useState("");
-    const [yearData, setYearData] = useState("");
 
    useEffect(()=>{
-    let url = "https://countriesnow.space/api/v0.1/countries/population"
+    let url = "https://dhis2-app-course.ifi.uio.no/api?page=2&pageSize=50"
     axios
     .get(url)
     .then((responce)=>{
-        let result = responce.data
-        let year = responce.data
-        console.log(year)
-        setYearData([...result.data, setYearData])
-        setData([...result.data, setData])
+        let result = responce.data.results
+        setData([...result, setData])
 
     })
    },[])
 
-  //  console.log(data)
-
-//   const data = [{country: 'india', USA: 4000, RSA: 2400, China: 2400, Japan:1400, India:8000}];
+   console.log(data)
 
   const mystyle={
     background:"#fff",
@@ -33,18 +27,18 @@ export default function Index() {
   return (
     <div style={mystyle} >
         <h1 style={{color:"gray"}}>World Population <strong style={{color:"#1e1e1e"}}>Chart</strong></h1>
-        
-           
-                <BarChart width={1200} height={250} data={data}>
-                <CartesianGrid strokeDasharray="3 2" />
-                <XAxis dataKey="country" />
-                <YAxis dataKey="year"/>
-                <Tooltip />
-                <Legend />
-                <Bar datakey="populationCounts[0].value" fill="red" />
-                <Bar datakey="populationCounts[0].year" fill="green" />
-                </BarChart>    
-       
+          
+        <BarChart width={780} height={250} data={data}>
+          <CartesianGrid strokeDasharray="1 1" />
+          <XAxis dataKey="Country" />
+          <YAxis />
+          <Tooltip />
+          <Legend />
+          <Bar dataKey="Population" fill="#8884d8" />
+          <Bar dataKey="PopulationGrowth" fill="#82ca9d" />
+        </BarChart>   
+
+            
     </div>
   )
 }
